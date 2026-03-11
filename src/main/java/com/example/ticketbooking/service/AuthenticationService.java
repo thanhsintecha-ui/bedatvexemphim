@@ -1,7 +1,7 @@
 package com.example.ticketbooking.service;
 
 import com.example.ticketbooking.dto.LoginRequest;
-import com.example.ticketbooking.dto.LoginResponse;
+import com.example.ticketbooking.dto.AuthResponse;
 import com.example.ticketbooking.exception.InvalidCredentialsException;
 import com.example.ticketbooking.model.User;
 import com.example.ticketbooking.repository.UserRepository;
@@ -32,7 +32,7 @@ public class AuthenticationService {
         this.jwtTokenUtil = jwtTokenUtil;
     }
 
-    public LoginResponse authenticateUser(LoginRequest request) {
+    public AuthResponse authenticateUser(LoginRequest request) {
         // Authenticate user using password encoding
         Optional<User> user = userRepository.findByUsername(request.getUsernameOrEmail());
         if (user.isEmpty()) {
@@ -54,11 +54,9 @@ public class AuthenticationService {
         String token = jwtTokenUtil.generateToken(userDetails);
 
         // Return response
-        return new LoginResponse(
+        return new AuthResponse(
             token,
-            user.get().getId(),
-            user.get().getUsername(),
-            user.get().getEmail()
+            "Đăng nhập thành công"
         );
     }
 }

@@ -27,12 +27,11 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<AuthResponse>> login(@Valid @RequestBody LoginRequest request) {
-        String token = authenticationService.authenticateUser(request);
-        AuthResponse response = new AuthResponse(token, "Đăng nhập thành công");
+        AuthResponse authResponse = authenticationService.authenticateUser(request);
         ApiResponse<AuthResponse> apiResponse = new ApiResponse(
                 200,
                 "Đăng nhập thành công",
-                response,
+                authResponse,
                 LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
         );
         return ResponseEntity.ok(apiResponse);

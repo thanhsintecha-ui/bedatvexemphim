@@ -1,12 +1,10 @@
 package com.example.ticketbooking.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public class LoginRequest {
 
-    @JsonProperty("reg")
     @NotBlank(message = "Tên đăng nhập không được để trống")
     @NotNull
     private String usernameOrEmail;

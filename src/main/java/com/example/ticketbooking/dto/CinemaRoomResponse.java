@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 public class CinemaRoomResponse {
     private Long id;
+    private Long cinemaId;
+    private String cinemaName;
     private String roomNumber;
     private Integer totalSeats;
     private String roomType;
@@ -13,10 +15,15 @@ public class CinemaRoomResponse {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public CinemaRoomResponse() {}
+    public CinemaRoomResponse() {
+    }
 
-    public CinemaRoomResponse(Long id, String roomNumber, Integer totalSeats, String roomType, Integer rowCount, Integer seatsPerRow, String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public CinemaRoomResponse(Long id, Long cinemaId, String cinemaName, String roomNumber, Integer totalSeats,
+            String roomType, Integer rowCount, Integer seatsPerRow, String description, LocalDateTime createdAt,
+            LocalDateTime updatedAt) {
         this.id = id;
+        this.cinemaId = cinemaId;
+        this.cinemaName = cinemaName;
         this.roomNumber = roomNumber;
         this.totalSeats = totalSeats;
         this.roomType = roomType;
@@ -28,30 +35,75 @@ public class CinemaRoomResponse {
     }
 
     // Getters and setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
 
-    public String getRoomNumber() { return roomNumber; }
-    public void setRoomNumber(String roomNumber) { this.roomNumber = roomNumber; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public Integer getTotalSeats() { return totalSeats; }
-    public void setTotalSeats(Integer totalSeats) { this.totalSeats = totalSeats; }
+    public String getRoomNumber() {
+        return roomNumber;
+    }
 
-    public String getRoomType() { return roomType; }
-    public void setRoomType(String roomType) { this.roomType = roomType; }
+    public void setRoomNumber(String roomNumber) {
+        this.roomNumber = roomNumber;
+    }
 
-    public Integer getRowCount() { return rowCount; }
-    public void setRowCount(Integer rowCount) { this.rowCount = rowCount; }
+    public Integer getTotalSeats() {
+        return totalSeats;
+    }
 
-    public Integer getSeatsPerRow() { return seatsPerRow; }
-    public void setSeatsPerRow(Integer seatsPerRow) { this.seatsPerRow = seatsPerRow; }
+    public void setTotalSeats(Integer totalSeats) {
+        this.totalSeats = totalSeats;
+    }
 
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
+    public String getRoomType() {
+        return roomType;
+    }
 
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    public void setRoomType(String roomType) {
+        this.roomType = roomType;
+    }
 
-    public LocalDateTime getUpdatedAt() { return updatedAt; }
-    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+    public Integer getRowCount() {
+        return rowCount;
+    }
+
+    public void setRowCount(Integer rowCount) {
+        this.rowCount = rowCount;
+    }
+
+    public Integer getSeatsPerRow() {
+        return seatsPerRow;
+    }
+
+    public void setSeatsPerRow(Integer seatsPerRow) {
+        this.seatsPerRow = seatsPerRow;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 }

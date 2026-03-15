@@ -31,8 +31,7 @@ public class RestExceptionHandler {
                 400,
                 message,
                 null,
-                LocalDateTime.now().format(formatter)
-        );
+                LocalDateTime.now().format(formatter));
         return ResponseEntity.badRequest().body(response);
     }
 
@@ -47,8 +46,7 @@ public class RestExceptionHandler {
                 400,
                 message,
                 null,
-                LocalDateTime.now().format(formatter)
-        );
+                LocalDateTime.now().format(formatter));
         return ResponseEntity.badRequest().body(response);
     }
 
@@ -58,9 +56,28 @@ public class RestExceptionHandler {
                 400,
                 ex.getMessage(),
                 null,
-                LocalDateTime.now().format(formatter)
-        );
+                LocalDateTime.now().format(formatter));
         return ResponseEntity.badRequest().body(response);
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ApiResponse<String>> handleResourceNotFound(ResourceNotFoundException ex) {
+        ApiResponse<String> response = new ApiResponse<>(
+                404,
+                ex.getMessage(),
+                null,
+                LocalDateTime.now().format(formatter));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ApiResponse<String>> handleUserNotFound(UserNotFoundException ex) {
+        ApiResponse<String> response = new ApiResponse<>(
+                404,
+                ex.getMessage(),
+                null,
+                LocalDateTime.now().format(formatter));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
     @ExceptionHandler(MovieNotFoundException.class)
@@ -69,9 +86,28 @@ public class RestExceptionHandler {
                 404,
                 ex.getMessage(),
                 null,
-                LocalDateTime.now().format(formatter)
-        );
+                LocalDateTime.now().format(formatter));
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    @ExceptionHandler(CinemaRoomNotFoundException.class)
+    public ResponseEntity<ApiResponse<String>> handleCinemaRoomNotFound(CinemaRoomNotFoundException ex) {
+        ApiResponse<String> response = new ApiResponse<>(
+                404,
+                ex.getMessage(),
+                null,
+                LocalDateTime.now().format(formatter));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    @ExceptionHandler(ShowtimeConflictException.class)
+    public ResponseEntity<ApiResponse<String>> handleShowtimeConflict(ShowtimeConflictException ex) {
+        ApiResponse<String> response = new ApiResponse<>(
+                409,
+                ex.getMessage(),
+                null,
+                LocalDateTime.now().format(formatter));
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
     }
 
     @ExceptionHandler(UserAlreadyExistsException.class)
@@ -80,8 +116,7 @@ public class RestExceptionHandler {
                 409,
                 ex.getMessage(),
                 null,
-                LocalDateTime.now().format(formatter)
-        );
+                LocalDateTime.now().format(formatter));
         return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
     }
 
@@ -91,8 +126,7 @@ public class RestExceptionHandler {
                 401,
                 ex.getMessage(),
                 null,
-                LocalDateTime.now().format(formatter)
-        );
+                LocalDateTime.now().format(formatter));
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
 
@@ -102,8 +136,7 @@ public class RestExceptionHandler {
                 500,
                 "Có lỗi xảy ra: " + ex.getMessage(),
                 null,
-                LocalDateTime.now().format(formatter)
-        );
+                LocalDateTime.now().format(formatter));
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 }

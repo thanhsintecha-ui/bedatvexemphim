@@ -21,6 +21,10 @@ public class CinemaRoom {
     @Column(nullable = false, unique = true)
     private String roomNumber;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cinema_id", nullable = false)
+    private Cinema cinema;
+
     @Column(nullable = false)
     private Integer totalSeats;
 

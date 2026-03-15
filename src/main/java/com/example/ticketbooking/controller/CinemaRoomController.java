@@ -22,11 +22,13 @@ public class CinemaRoomController {
     @PostMapping
     public ResponseEntity<ApiResponse<CinemaRoomResponse>> addCinemaRoom(@RequestBody CreateCinemaRoomRequest request) {
         var cinemaRoom = cinemaRoomService.addCinemaRoom(request);
-        ApiResponse<CinemaRoomResponse> apiResponse = new ApiResponse(
+        ApiResponse<CinemaRoomResponse> apiResponse = new ApiResponse<>(
                 201,
                 "Thêm phòng chiếu thành công",
                 new CinemaRoomResponse(
                         cinemaRoom.getId(),
+                        cinemaRoom.getCinema().getId(),
+                        cinemaRoom.getCinema().getName(),
                         cinemaRoom.getRoomNumber(),
                         cinemaRoom.getTotalSeats(),
                         cinemaRoom.getRoomType(),
@@ -34,17 +36,16 @@ public class CinemaRoomController {
                         cinemaRoom.getSeatsPerRow(),
                         cinemaRoom.getDescription(),
                         cinemaRoom.getCreatedAt(),
-                        cinemaRoom.getUpdatedAt()
-                ),
-                LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
-        );
+                        cinemaRoom.getUpdatedAt()),
+                LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
         return ResponseEntity.status(201).body(apiResponse);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<Void>> updateCinemaRoom(@PathVariable Long id, @RequestBody CreateCinemaRoomRequest request) {
+    public ResponseEntity<ApiResponse<Void>> updateCinemaRoom(@PathVariable Long id,
+            @RequestBody CreateCinemaRoomRequest request) {
         cinemaRoomService.updateCinemaRoom(id, request);
-        ApiResponse<Void> apiResponse = new ApiResponse(200, "Cập nhật phòng chiếu thành công", null,
+        ApiResponse<Void> apiResponse = new ApiResponse<>(200, "Cập nhật phòng chiếu thành công", null,
                 LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
         return ResponseEntity.ok(apiResponse);
     }
@@ -52,7 +53,7 @@ public class CinemaRoomController {
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteCinemaRoom(@PathVariable Long id) {
         cinemaRoomService.deleteCinemaRoom(id);
-        ApiResponse<Void> apiResponse = new ApiResponse(200, "Xóa phòng chiếu thành công", null,
+        ApiResponse<Void> apiResponse = new ApiResponse<>(200, "Xóa phòng chiếu thành công", null,
                 LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
         return ResponseEntity.ok(apiResponse);
     }
@@ -60,11 +61,13 @@ public class CinemaRoomController {
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<CinemaRoomResponse>> getCinemaRoom(@PathVariable Long id) {
         var cinemaRoom = cinemaRoomService.getCinemaRoomById(id);
-        ApiResponse<CinemaRoomResponse> apiResponse = new ApiResponse(
+        ApiResponse<CinemaRoomResponse> apiResponse = new ApiResponse<>(
                 200,
                 "Lấy thông tin phòng chiếu thành công",
                 new CinemaRoomResponse(
                         cinemaRoom.getId(),
+                        cinemaRoom.getCinema().getId(),
+                        cinemaRoom.getCinema().getName(),
                         cinemaRoom.getRoomNumber(),
                         cinemaRoom.getTotalSeats(),
                         cinemaRoom.getRoomType(),
@@ -72,22 +75,19 @@ public class CinemaRoomController {
                         cinemaRoom.getSeatsPerRow(),
                         cinemaRoom.getDescription(),
                         cinemaRoom.getCreatedAt(),
-                        cinemaRoom.getUpdatedAt()
-                ),
-                LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
-        );
+                        cinemaRoom.getUpdatedAt()),
+                LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
         return ResponseEntity.ok(apiResponse);
     }
 
     @GetMapping
     public ResponseEntity<ApiResponse<List<CinemaRoomResponse>>> getAllCinemaRooms() {
         List<CinemaRoomResponse> responses = cinemaRoomService.getAllCinemaRooms();
-        ApiResponse<List<CinemaRoomResponse>> apiResponse = new ApiResponse(
+        ApiResponse<List<CinemaRoomResponse>> apiResponse = new ApiResponse<>(
                 200,
                 "Danh sách phòng chiếu",
                 responses,
-                LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
-        );
+                LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
         return ResponseEntity.ok(apiResponse);
     }
 }

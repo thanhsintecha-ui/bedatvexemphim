@@ -38,6 +38,9 @@ public class Showtime {
     @Column(name = "available_seats", nullable = false)
     private Integer availableSeats;
 
+    @Column(nullable = false)
+    private String format; // 2D Phụ đề, 2D Lồng tiếng, IMAX, etc.
+
     @CreatedDate
     private LocalDateTime createdAt;
 

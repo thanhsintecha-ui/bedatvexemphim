@@ -22,18 +22,49 @@ public class CreateShowtimeRequest {
     @Positive(message = "Price must be positive")
     private Double price;
 
+    @jakarta.validation.constraints.NotBlank(message = "Format is required")
+    private String format;
+
     // Getters and setters
-    public Long getMovieId() { return movieId; }
-    public void setMovieId(Long movieId) { this.movieId = movieId; }
+    public Long getMovieId() {
+        return movieId;
+    }
 
-    public Long getCinemaRoomId() { return cinemaRoomId; }
-    public void setCinemaRoomId(Long cinemaRoomId) { this.cinemaRoomId = cinemaRoomId; }
+    public void setMovieId(Long movieId) {
+        this.movieId = movieId;
+    }
 
-    public LocalDateTime getStartTime() { return startTime; }
-    public void setStartTime(LocalDateTime startTime) { this.startTime = startTime; }
+    public Long getCinemaRoomId() {
+        return cinemaRoomId;
+    }
 
-    public Double getPrice() { return price; }
-    public void setPrice(Double price) { this.price = price; }
+    public void setCinemaRoomId(Long cinemaRoomId) {
+        this.cinemaRoomId = cinemaRoomId;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public String getFormat() {
+        return format;
+    }
+
+    public void setFormat(String format) {
+        this.format = format;
+    }
 
     // Calculate endTime based on movie duration
     public LocalDateTime calculateEndTime() {

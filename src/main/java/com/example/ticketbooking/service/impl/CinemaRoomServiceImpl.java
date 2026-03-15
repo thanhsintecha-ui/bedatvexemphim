@@ -13,19 +13,27 @@ import java.util.stream.Collectors;
 @Service
 public class CinemaRoomServiceImpl implements CinemaRoomService {
     private final CinemaRoomRepository cinemaRoomRepository;
+    private final com.example.ticketbooking.repository.CinemaRepository cinemaRepository;
 
-    public CinemaRoomServiceImpl(CinemaRoomRepository cinemaRoomRepository) {
+    public CinemaRoomServiceImpl(CinemaRoomRepository cinemaRoomRepository,
+            com.example.ticketbooking.repository.CinemaRepository cinemaRepository) {
         this.cinemaRoomRepository = cinemaRoomRepository;
+        this.cinemaRepository = cinemaRepository;
     }
 
     @Override
     public CinemaRoom addCinemaRoom(CreateCinemaRoomRequest request) {
         // Check if room number already exists
         if (cinemaRoomRepository.findByRoomNumber(request.getRoomNumber()).isPresent()) {
-            throw new IllegalArgumentException("Cinema room with number " + request.getRoomNumber() + " already exists");
+            throw new IllegalArgumentException(
+                    "Cinema room with number " + request.getRoomNumber() + " already exists");
         }
 
+        com.example.ticketbooking.model.Cinema cinema = cinemaRepository.findById(request.getCinemaId())
+                .orElseThrow(() -> new RuntimeException("Cinema not found with id " + request.getCinemaId()));
+
         CinemaRoom cinemaRoom = new CinemaRoom();
+        cinemaRoom.setCinema(cinema);
         cinemaRoom.setRoomNumber(request.getRoomNumber());
         cinemaRoom.setTotalSeats(request.getTotalSeats());
         cinemaRoom.setRoomType(request.getRoomType());
@@ -43,10 +51,15 @@ public class CinemaRoomServiceImpl implements CinemaRoomService {
 
         // Check if room number already exists for another room
         if (!cinemaRoom.getRoomNumber().equals(request.getRoomNumber()) &&
-            cinemaRoomRepository.findByRoomNumber(request.getRoomNumber()).isPresent()) {
-            throw new IllegalArgumentException("Cinema room with number " + request.getRoomNumber() + " already exists");
+                cinemaRoomRepository.findByRoomNumber(request.getRoomNumber()).isPresent()) {
+            throw new IllegalArgumentException(
+                    "Cinema room with number " + request.getRoomNumber() + " already exists");
         }
 
+        com.example.ticketbooking.model.Cinema cinema = cinemaRepository.findById(request.getCinemaId())
+                .orElseThrow(() -> new RuntimeException("Cinema not found with id " + request.getCinemaId()));
+
+        cinemaRoom.setCinema(cinema);
         cinemaRoom.setRoomNumber(request.getRoomNumber());
         cinemaRoom.setTotalSeats(request.getTotalSeats());
         cinemaRoom.setRoomType(request.getRoomType());
@@ -81,6 +94,8 @@ public class CinemaRoomServiceImpl implements CinemaRoomService {
     private CinemaRoomResponse convertToResponse(CinemaRoom cinemaRoom) {
         return new CinemaRoomResponse(
                 cinemaRoom.getId(),
+                cinemaRoom.getCinema().getId(),
+                cinemaRoom.getCinema().getName(),
                 cinemaRoom.getRoomNumber(),
                 cinemaRoom.getTotalSeats(),
                 cinemaRoom.getRoomType(),
@@ -88,7 +103,6 @@ public class CinemaRoomServiceImpl implements CinemaRoomService {
                 cinemaRoom.getSeatsPerRow(),
                 cinemaRoom.getDescription(),
                 cinemaRoom.getCreatedAt(),
-                cinemaRoom.getUpdatedAt()
-        );
+                cinemaRoom.getUpdatedAt());
     }
 }

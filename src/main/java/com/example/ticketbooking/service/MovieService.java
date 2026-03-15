@@ -2,6 +2,7 @@ package com.example.ticketbooking.service;
 
 import com.example.ticketbooking.exception.MovieNotFoundException;
 import com.example.ticketbooking.model.Movie;
+import com.example.ticketbooking.model.MovieStatus;
 import com.example.ticketbooking.repository.MovieRepository;
 import com.example.ticketbooking.dto.MovieRequest;
 import com.example.ticketbooking.dto.MovieResponse;
@@ -24,6 +25,7 @@ public class MovieService {
         movie.setDuration(request.getDuration());
         movie.setGenre(request.getGenre());
         movie.setPosterUrl(request.getPosterUrl());
+        movie.setStatus(request.getStatus());
         return movieRepository.save(movie);
     }
 
@@ -35,6 +37,7 @@ public class MovieService {
         movie.setDuration(request.getDuration());
         movie.setGenre(request.getGenre());
         movie.setPosterUrl(request.getPosterUrl());
+        movie.setStatus(request.getStatus());
         return movieRepository.save(movie);
     }
 
@@ -55,6 +58,16 @@ public class MovieService {
         return movies.stream().map(this::convertToResponse).collect(Collectors.toList());
     }
 
+    public List<MovieResponse> getNowShowingMovies() {
+        return movieRepository.findByStatus(MovieStatus.NOW_SHOWING)
+                .stream().map(this::convertToResponse).collect(Collectors.toList());
+    }
+
+    public List<MovieResponse> getComingSoonMovies() {
+        return movieRepository.findByStatus(MovieStatus.COMING_SOON)
+                .stream().map(this::convertToResponse).collect(Collectors.toList());
+    }
+
     private MovieResponse convertToResponse(Movie movie) {
         MovieResponse response = new MovieResponse();
         response.setId(movie.getId());
@@ -63,6 +76,7 @@ public class MovieService {
         response.setDuration(movie.getDuration());
         response.setGenre(movie.getGenre());
         response.setPosterUrl(movie.getPosterUrl());
+        response.setStatus(movie.getStatus());
         response.setCreatedAt(movie.getCreatedAt());
         response.setUpdatedAt(movie.getUpdatedAt());
         return response;
